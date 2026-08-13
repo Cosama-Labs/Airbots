@@ -1,18 +1,30 @@
+<div align="center">
+
+<img src="assets/cosmo-airbots.jpg" alt="Cosmo — AIRbot Standard mascot" width="320" />
+
 # AIRbot Standard
 
-> **AIRbot = AI Registered Bot**
+### The Open Standard for Registered, Verified AI Agents
 
-**An AI model is not an AIRbot.**
+**AIRbot = AI Registered Bot**
+
+Purpose-built • Registered • Security-scanned • Verified • Versioned • Governed
+
+[**airbots.co**](https://airbots.co) · [Specification](SPECIFICATION.md) · [Conformance](CONFORMANCE.md) · [Security](SECURITY.md) · [Governance](GOVERNANCE.md)
+
+**Draft v0.2.0** · Part of the **AROS — Agentic Registry Open Standard** family
+
+</div>
+
+---
+
+## An AI model is not an AIRbot
 
 An **AIRbot** is a purpose-built, self-contained AI agent developed for a defined role or task — such as an Instagram agent, social-media agent, financial-planning agent, support agent, research agent, or procurement agent.
 
-An AIRbot packages the behavior and controls required to perform that role in a form that can be inspected, registered, security-scanned, verified, deployed, versioned, and governed.
+An AI model may power an AIRbot, but the model itself is not the agent.
 
-**Status:** Draft v0.2.0  
-**Standard family:** AROS — Agentic Registry Open Standard  
-**Canonical specification:** [SPECIFICATION.md](SPECIFICATION.md)
-
-## Core definition
+An AIRbot packages the behavior and controls required to perform its role in a form that can be inspected, registered, security-scanned, verified, deployed, versioned, and governed.
 
 > **AIRbot:** A registered, versioned, purpose-built AI agent with predefined tasks, skills, workflows, input requirements, output requirements, model policy, security controls, credential-protection rules, governance requirements, an A2A Agent Card, declared deployment methods, and immutable verification of each approved version.
 
@@ -109,15 +121,19 @@ A changed digest invalidates verification for that version.
 
 ## Cosmo
 
-**Cosmo is the mascot of the AIRbot Standard.**
+**Cosmo is the official mascot of the AIRbot Standard.**
 
-Canonical asset path:
+His job is simple: make a serious agent standard recognizable without making it boring.
 
-```text
-assets/cosmo.png
-```
+## Project links
 
-The source artwork was supplied by the project owner and should be stored at that path.
+- **Website:** [airbots.co](https://airbots.co)
+- **Canonical specification:** [SPECIFICATION.md](SPECIFICATION.md)
+- **Conformance:** [CONFORMANCE.md](CONFORMANCE.md)
+- **Security:** [SECURITY.md](SECURITY.md)
+- **Governance:** [GOVERNANCE.md](GOVERNANCE.md)
+- **Versioning:** [VERSIONING.md](VERSIONING.md)
+- **Terminology:** [TERMINOLOGY.md](TERMINOLOGY.md)
 
 ## Repository structure
 
@@ -131,26 +147,23 @@ Airbots/
 ├── VERSIONING.md
 ├── TERMINOLOGY.md
 ├── NOTICE.md
-├── LICENSE
 ├── VERSION
+├── assets/
+│   └── cosmo-airbots.jpg
 ├── schemas/
 │   ├── airbot-manifest.schema.json
 │   ├── registry-record.schema.json
 │   └── verification-record.schema.json
-├── docs/
-│   ├── package-format.md
-│   ├── verification-lifecycle.md
-│   ├── marketplace-eligibility.md
-│   ├── credentials-and-secrets.md
-│   ├── model-policy.md
-│   ├── deployment.md
-│   ├── reputation.md
-│   └── a2a-agent-card.md
-└── examples/
-    ├── social-media-airbot/
-    └── financial-planner-airbot/
+└── docs/
+    └── a2a-agent-card.md
 ```
 
-## License
+---
 
-Apache License 2.0. See [LICENSE](LICENSE).
+<div align="center">
+
+**AIRbot Standard — Define the agent. Verify the artifact. Trust the version.**
+
+[airbots.co](https://airbots.co)
+
+</div>
