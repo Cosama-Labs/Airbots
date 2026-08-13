@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airbots.dev/spec/0.2/airbot-manifest.schema.json",
+  "title": "AIRbot Manifest Draft 0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "standard", "airbot_id", "name", "version", "purpose", "publisher",
+    "tasks", "skills", "workflows", "input_contracts", "output_contracts",
+    "model_policy", "security", "credentials", "governance", "a2a",
+    "deployment", "package"
+  ],
+  "properties": {
+    "standard": { "const": "https://airbots.dev/spec/0.2/manifest" },
+    "airbot_id": { "type": "string", "pattern": "^airbot:[A-Za-z0-9.-]+:[A-Za-z0-9._~-]+$" },
+    "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+    "version": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "purpose": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "out_of_scope": { "type": "array", "items": { "type": "string" } },
+    "publisher": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "id": { "type": "string" },
+        "contact": { "type": "string" }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "description"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "description": { "type": "string", "minLength": 1 },
+          "risk_level": { "enum": ["low", "moderate", "high", "critical"] },
+          "human_approval_required": { "type": "boolean" }
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "type": { "enum": ["internal", "api", "mcp", "a2a", "knowledge", "database", "browser", "connector", "other"] },
+          "description": { "type": "string" },
+          "permission_scopes": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "workflows": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "task_ids"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "task_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "skill_ids": { "type": "array", "items": { "type": "string" } },
+          "steps": { "type": "array" },
+          "human_approval_required": { "type": "boolean" }
+        }
+      }
+    },
+    "input_contracts": { "$ref": "#/$defs/contracts" },
+    "output_contracts": { "$ref": "#/$defs/contracts" },
+    "model_policy": {
+      "type": "object",
+      "required": ["mode"],
+      "properties": {
+        "mode": { "enum": ["model_agnostic", "model_specific"] },
+        "allowed_models": { "type": "array", "items": { "type": "string" } },
+        "required_models": { "type": "array", "items": { "type": "string" } },
+        "minimum_capabilities": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "security": {
+      "type": "object",
+      "required": ["least_privilege", "network_access"],
+      "properties": {
+        "least_privilege": { "const": true },
+        "network_access": { "enum": ["none", "restricted", "declared", "unrestricted"] },
+        "permission_scopes": { "type": "array", "items": { "type": "string" } },
+        "denied_scopes": { "type": "array", "items": { "type": "string" } },
+        "allowed_domains": { "type": "array", "items": { "type": "string" } },
+        "sandbox_required": { "type": "boolean" }
+      }
+    },
+    "credentials": {
+      "type": "object",
+      "required": ["embedded_secrets_allowed", "requirements"],
+      "properties": {
+        "embedded_secrets_allowed": { "const": false },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "type", "binding"],
+            "properties": {
+              "id": { "type": "string" },
+              "provider": { "type": "string" },
+              "type": { "type": "string" },
+              "scopes": { "type": "array", "items": { "type": "string" } },
+              "binding": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "required": ["audit_required"],
+      "properties": {
+        "audit_required": { "type": "boolean" },
+        "human_approval_for": { "type": "array", "items": { "type": "string" } },
+        "prohibited_actions": { "type": "array", "items": { "type": "string" } },
+        "data_handling": { "type": "object" },
+        "retention": { "type": "object" }
+      }
+    },
+    "a2a": {
+      "type": "object",
+      "required": ["agent_card_path"],
+      "properties": {
+        "agent_card_path": { "type": "string", "minLength": 1 },
+        "agent_card_digest": { "type": "string" }
+      }
+    },
+    "deployment": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": { "enum": ["vercel", "cloudflare_worker", "container", "kubernetes", "serverless", "managed_runtime", "private_runtime", "local", "other"] },
+          "artifact": { "type": "string" },
+          "runtime": { "type": "string" },
+          "regions": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "package": {
+      "type": "object",
+      "required": ["digest_algorithm", "digest"],
+      "properties": {
+        "digest_algorithm": { "const": "sha256" },
+        "digest": { "type": "string", "pattern": "^sha256:.+$" },
+        "sbom_path": { "type": "string" },
+        "source_revision": { "type": "string" }
+      }
+    },
+    "extensions": { "type": "object", "additionalProperties": true }
+  },
+  "$defs": {
+    "contracts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "schema"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "content_type": { "type": "string" },
+          "schema": { "type": "object" }
+        }
+      }
+    }
+  }
+}
