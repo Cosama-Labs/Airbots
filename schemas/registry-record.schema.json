@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airbots.dev/spec/0.2/registry-record.schema.json",
+  "title": "AIRbot Registry Record Draft 0.2",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["airbot_id", "publisher", "versions", "reputation"],
+  "properties": {
+    "airbot_id": { "type": "string" },
+    "publisher": { "type": "object" },
+    "versions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["version", "package_digest", "lifecycle_status", "verification_status"],
+        "properties": {
+          "version": { "type": "string" },
+          "package_digest": { "type": "string" },
+          "lifecycle_status": {
+            "enum": ["development", "submitted", "validating", "security_scanning", "governance_review", "verified", "active", "suspended", "revoked", "retired"]
+          },
+          "verification_status": {
+            "enum": ["unverified", "pending", "verified", "failed", "expired", "revoked"]
+          },
+          "verification_record": { "type": "string" }
+        }
+      }
+    },
+    "reputation": { "type": "object" },
+    "incidents": { "type": "array" }
+  }
+}
